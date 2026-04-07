@@ -20,10 +20,16 @@
     </string-array>
 
     <string-array name="cinema_entries">
-        <item>Default</item><item>Profile 1</item><item>Profile 2</item>
-        <item>Profile 3</item><item>Profile 4</item><item>Profile 5</item>
-        <item>Profile 6</item><item>Profile 7</item><item>Profile 8</item>
-        <item>Profile 9</item>
+        <item>Default</item>
+        <item>S-Cinetone</item>
+        <item>S-Log2 / S-Gamut</item>
+        <item>S-Log3 / S-Gamut3.Cine</item>
+        <item>S-Log3 / S-Gamut3</item>
+        <item>HLG BT.2020</item>
+        <item>HLG BT.709</item>
+        <item>ITU709</item>
+        <item>ITU709 (800%)</item>
+        <item>Neutral</item>
     </string-array>
     <string-array name="cinema_values">
         <item>0</item><item>1</item><item>2</item><item>3</item><item>4</item>
