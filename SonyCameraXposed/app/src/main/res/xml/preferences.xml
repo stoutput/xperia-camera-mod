@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Image Processing">
+        <ListPreference
+            android:key="colorToneProfile"
+            android:title="Creative Look"
+            android:summary="Sony Alpha color science profiles. Controls color rendering, contrast, and tone for stills and video."
+            android:entries="@array/creative_look_entries"
+            android:entryValues="@array/creative_look_values"
+            android:defaultValue="0" />
+        <ListPreference
+            android:key="cinemaProfile"
+            android:title="Cinema Profile"
+            android:summary="CineAlta-derived video grading profiles (S-Cinetone, S-Log, HLG variants)."
+            android:entries="@array/cinema_entries"
+            android:entryValues="@array/cinema_values"
+            android:defaultValue="0" />
+        <ListPreference
+            android:key="stillHdrMode"
+            android:title="Still HDR"
+            android:summary="Multi-exposure HDR for stills. Merges frames for extended dynamic range. Higher = more aggressive."
+            android:entries="@array/hdr_entries"
+            android:entryValues="@array/hdr_values"
+            android:defaultValue="0" />
+        <SwitchPreference
+            android:key="multiFrameNrMode"
+            android:title="Multi-Frame Noise Reduction"
+            android:summary="Stacks frames to reduce noise (BIONZ-derived). Best for low light stills. May increase capture time."
+            android:defaultValue="false" />
+        <SwitchPreference
+            android:key="highQualitySnapshotMode"
+            android:title="High Quality Snapshot"
+            android:summary="Enhanced still pipeline with additional sharpening and color processing. Higher quality JPEGs."
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Autofocus &amp; Detection">
+        <ListPreference
+            android:key="eyeDetectMode"
+            android:title="Eye AF"
+            android:summary="Alpha-derived real-time eye tracking. Locks focus on human or animal eyes."
+            android:entries="@array/eye_af_entries"
+            android:entryValues="@array/eye_af_values"
+            android:defaultValue="1" />
+        <SwitchPreference
+            android:key="sceneDetectMode"
+            android:title="Scene Detection"
+            android:summary="AI scene recognition (people, food, landscape). Optimizes exposure, WB, and color automatically."
+            android:defaultValue="true" />
+        <SwitchPreference
+            android:key="conditionDetectMode"
+            android:title="Condition Detection"
+            android:summary="Detects shooting conditions (backlight, low light, motion) and adjusts parameters."
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Video">
+        <SwitchPreference
+            android:key="videoMultiFrameHdrMode"
+            android:title="Video HDR"
+            android:summary="Real-time multi-frame HDR for video. Extends dynamic range. May affect framerate."
+            android:defaultValue="false" />
+        <SwitchPreference
+            android:key="videoSensitivitySmoothing"
+            android:title="Video ISO Smoothing"
+            android:summary="Smooths ISO transitions during recording. Prevents abrupt brightness jumps."
+            android:defaultValue="true" />
+        <ListPreference
+            android:key="videoStabilizationMode"
+            android:title="Video Stabilization (Sony)"
+            android:summary="Standard=OIS+EIS. Active=additional gyro stabilization with tighter crop for handheld."
+            android:entries="@array/stab_entries"
+            android:entryValues="@array/stab_values"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Zoom">
+        <ListPreference
+            android:key="superResolutionZoomMode"
+            android:title="Super Resolution Zoom"
+            android:summary="AI upscaling beyond optical range. Mode 2 = more aggressive enhancement."
+            android:entries="@array/super_res_entries"
+            android:entryValues="@array/super_res_values"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

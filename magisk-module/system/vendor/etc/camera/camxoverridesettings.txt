@@ -1,0 +1,25 @@
+# Sony Camera2 API Unlocker v2.0 - CamX Override Settings
+logInfoMask=0
+logPerfInfoMask=0
+logVerboseMask=0
+logWarningMask=0
+isOEMStatSettingEnable=TRUE
+isOEMIQSettingEnable=TRUE
+isStrideSettingEnable=TRUE
+maxHalRequests=16
+numPCRsBeforeStreamOn=1
+outputFormat=OutputFormatYUV420NV12
+waitAllResultsTimeout=10
+enableDualIFE=TRUE
+IFEDualClockThreshold=990000000
+systemLogEnable=FALSE
+numMetadataResults=2
+maxNonHfrFps=120
+memsetInputMeta=0
+RaiseRecoverySigabrt=FALSE
+enableNCSService=TRUE
+enableDMEbasedMultiframe=TRUE
+enableInitRegDump=FALSE
+IFENumFramesHighBW=4
+enableInSensorZoom=TRUE
+enableDynamicModeSwitchVCUpdate=FALSE

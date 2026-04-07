@@ -1,0 +1,38 @@
+plugins {
+    id 'com.android.application'
+}
+
+def versionProps = new Properties()
+versionProps.load(new FileInputStream(rootProject.file('../version.properties')))
+
+android {
+    namespace 'com.xperia.cameraxposed'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.xperia.cameraxposed"
+        minSdk 33
+        targetSdk 34
+        versionCode 1
+        versionName versionProps['version']
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    compileOnly 'de.robv.android.xposed:api:82'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.preference:preference:1.2.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+}

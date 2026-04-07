@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <TextureView
+        android:id="@+id/textureView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+    <!-- Controls overlay - scrollable right panel -->
+    <ScrollView
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="#88000000"
+        android:padding="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SonyCameraX"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Lens -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Lens" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="4dp"/>
+            <Spinner android:id="@+id/spinnerLens"
+                android:layout_width="match_parent" android:layout_height="32dp"
+                android:backgroundTint="#FFFFFF" />
+
+            <!-- Resolution + FPS -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Resolution / FPS" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="4dp"/>
+            <Spinner android:id="@+id/spinnerResolutionFps"
+                android:layout_width="match_parent" android:layout_height="32dp"
+                android:backgroundTint="#FFFFFF" />
+
+            <!-- Cinema Profile -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Cinema Profile" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="4dp"/>
+            <Spinner android:id="@+id/spinnerCinemaProfile"
+                android:layout_width="match_parent" android:layout_height="32dp"
+                android:backgroundTint="#FFFFFF" />
+
+            <!-- Creative Look -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Creative Look" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="4dp"/>
+            <Spinner android:id="@+id/spinnerColorTone"
+                android:layout_width="match_parent" android:layout_height="32dp"
+                android:backgroundTint="#FFFFFF" />
+
+            <!-- Exposure (ISO) -->
+            <TextView android:id="@+id/tvIso"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="ISO: Auto" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="4dp"/>
+            <SeekBar android:id="@+id/seekIso"
+                android:layout_width="match_parent" android:layout_height="28dp" />
+
+            <!-- Exposure Time -->
+            <TextView android:id="@+id/tvShutter"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Shutter: Auto" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="2dp"/>
+            <SeekBar android:id="@+id/seekShutter"
+                android:layout_width="match_parent" android:layout_height="28dp" />
+
+            <!-- EV Compensation -->
+            <TextView android:id="@+id/tvEv"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="EV: 0" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="2dp"/>
+            <SeekBar android:id="@+id/seekEv"
+                android:layout_width="match_parent" android:layout_height="28dp" />
+
+            <!-- Toggles -->
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchVideoHdr"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Video HDR" android:textColor="#FFFFFF" android:textSize="11sp" android:layout_marginTop="4dp"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchEyeAf"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Eye AF" android:textColor="#FFFFFF" android:textSize="11sp"
+                android:checked="true" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchSceneDetect"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Scene Detect" android:textColor="#FFFFFF" android:textSize="11sp"
+                android:checked="true" />
+
+            <!-- Stabilization -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Stabilization" android:textColor="#AAAAAA" android:textSize="10sp" android:layout_marginTop="4dp"/>
+            <Spinner android:id="@+id/spinnerStabilization"
+                android:layout_width="match_parent" android:layout_height="32dp"
+                android:backgroundTint="#FFFFFF" />
+
+            <!-- Status -->
+            <TextView android:id="@+id/tvStatus"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Ready" android:textColor="#00FF00" android:textSize="10sp"
+                android:layout_marginTop="6dp" />
+
+            <!-- Record button -->
+            <Button android:id="@+id/btnRecord"
+                android:layout_width="match_parent" android:layout_height="44dp"
+                android:text="● REC" android:textSize="14sp"
+                android:backgroundTint="#CC0000" android:textColor="#FFFFFF"
+                android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

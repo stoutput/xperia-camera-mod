@@ -1,0 +1,39 @@
+plugins {
+    id 'com.android.application'
+}
+
+def versionProps = new Properties()
+versionProps.load(new FileInputStream(rootProject.file('../version.properties')))
+
+android {
+    namespace 'com.xperia.camerax'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.xperia.camerax"
+        minSdk 33
+        targetSdk 34
+        versionCode 1
+        versionName versionProps['version']
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+        debug {
+            debuggable true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+}

@@ -1,0 +1,19 @@
+#!/sbin/sh
+umask 022
+OUTFD=$2; ZIPFILE=$3
+ui_print() { echo "$1"; }
+mount /data 2>/dev/null
+[ -f /data/adb/magisk/util_functions.sh ] || { ui_print "Magisk 20.4+ required"; exit 1; }
+. /data/adb/magisk/util_functions.sh
+[ $MAGISK_VER_CODE -lt 20400 ] && { ui_print "Magisk 20.4+ required"; exit 1; }
+setup_flashable; mount_partitions; api_level_arch_detect
+$BOOTMODE && boot_actions || recovery_actions
+unzip -o "$ZIPFILE" -x 'META-INF/*' -d $MODPATH >&2
+# Save original lib
+cp /vendor/lib64/local_libcamera_metadata.so $MODPATH/original_lib.so 2>/dev/null
+cp $MODPATH/original_lib.so /data/local/tmp/local_libcamera_metadata_real.so 2>/dev/null
+chmod 644 /data/local/tmp/local_libcamera_metadata_real.so 2>/dev/null
+set_perm_recursive $MODPATH 0 0 0755 0644
+[ -f $MODPATH/post-fs-data.sh ] && set_perm $MODPATH/post-fs-data.sh 0 0 0755
+[ -f $MODPATH/service.sh ] && set_perm $MODPATH/service.sh 0 0 0755
+$BOOTMODE || recovery_cleanup

@@ -1,0 +1,41 @@
+# Gradle
+.gradle/
+build/
+**/build/
+*.class
+
+# Local config
+local.properties
+*.properties.local
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+captures/
+.navigation/
+.externalNativeBuild/
+.cxx/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Frida server binary
+tools/frida-server
+
+# Python virtual environment
+.venv/
+
+# Vendor blobs (large binaries, not tracked)
+vendor-blobs/
+
+# Built APKs and release zips
+apks/
+*.apk
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db

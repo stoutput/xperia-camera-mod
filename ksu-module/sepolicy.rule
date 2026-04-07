@@ -1,0 +1,8 @@
+# Allow camera provider to load our shim via LD_PRELOAD
+allow hal_camera_default vendor_data_file file { read open getattr execute };
+allow hal_camera_default vendor_file file { read open getattr execute };
+allow hal_camera_default vendor_configs_file file { read open getattr };
+allow cameraserver vendor_configs_file file { read open getattr };
+# Allow reading config from /data/local/tmp
+allow hal_camera_default shell_data_file file { read open getattr };
+allow hal_camera_default shell_data_file dir { search };

@@ -1,0 +1,6 @@
+id=sony-camera-unlock
+name=Sony Camera2 API Unlocker
+version=v5.0
+versionCode=5
+author=SonyCameraX Project
+description=Replaces local_libcamera_metadata.so with RTLD_NEXT shim that injects Sony vendor tags into ALL Camera2 API apps. Configure via /data/local/tmp/sony-camera-shim.conf

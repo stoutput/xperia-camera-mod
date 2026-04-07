@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Preferences fill the space above the button -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@android:id/list_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="72dp"
+        android:clipToPadding="false" />
+
+    <!-- Floating restart button at bottom -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRestart"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="12dp"
+        android:text="⟳ Restart App to Apply Changes"
+        android:textSize="15sp"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        android:backgroundTint="#FF6200EE"
+        android:textColor="#FFFFFF"
+        android:elevation="8dp" />
+
+</FrameLayout>

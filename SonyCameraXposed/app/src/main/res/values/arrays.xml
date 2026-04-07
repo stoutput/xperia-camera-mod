@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="xposed_scope">
+        <item>android</item>
+    </string-array>
+
+    <string-array name="creative_look_entries">
+        <item>Standard (ST)</item>
+        <item>Neutral (NT)</item>
+        <item>Vivid (VV)</item>
+        <item>Vivid 2 (VV2)</item>
+        <item>Film (FL)</item>
+        <item>Instant (IN)</item>
+        <item>Sunset (SH)</item>
+        <item>B&amp;W (BW)</item>
+    </string-array>
+    <string-array name="creative_look_values">
+        <item>0</item><item>1</item><item>3</item><item>4</item>
+        <item>6</item><item>7</item><item>8</item><item>11</item>
+    </string-array>
+
+    <string-array name="cinema_entries">
+        <item>Default</item><item>Profile 1</item><item>Profile 2</item>
+        <item>Profile 3</item><item>Profile 4</item><item>Profile 5</item>
+        <item>Profile 6</item><item>Profile 7</item><item>Profile 8</item>
+        <item>Profile 9</item>
+    </string-array>
+    <string-array name="cinema_values">
+        <item>0</item><item>1</item><item>2</item><item>3</item><item>4</item>
+        <item>5</item><item>6</item><item>7</item><item>8</item><item>9</item>
+    </string-array>
+
+    <string-array name="eye_af_entries">
+        <item>Off</item><item>Human</item><item>Animal</item>
+    </string-array>
+    <string-array name="eye_af_values">
+        <item>0</item><item>1</item><item>2</item>
+    </string-array>
+
+    <string-array name="hdr_entries">
+        <item>Off</item><item>Mode 1</item><item>Mode 2</item><item>Mode 3</item>
+    </string-array>
+    <string-array name="hdr_values">
+        <item>0</item><item>1</item><item>2</item><item>3</item>
+    </string-array>
+
+    <string-array name="super_res_entries">
+        <item>Off</item><item>Mode 1</item><item>Mode 2</item>
+    </string-array>
+    <string-array name="super_res_values">
+        <item>0</item><item>1</item><item>2</item>
+    </string-array>
+
+    <string-array name="stab_entries">
+        <item>Off</item><item>Standard</item><item>Active</item>
+    </string-array>
+    <string-array name="stab_values">
+        <item>0</item><item>1</item><item>2</item>
+    </string-array>
+</resources>
