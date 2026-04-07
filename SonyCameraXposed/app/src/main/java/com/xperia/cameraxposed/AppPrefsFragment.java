@@ -3,11 +3,14 @@ package com.xperia.cameraxposed;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.system.Os;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,9 +51,10 @@ public class AppPrefsFragment extends PreferenceFragmentCompat
         appLabel = getArguments() != null ? getArguments().getString(ARG_LABEL) : null;
         isGlobal = (appPkg == null);
 
-        getPreferenceManager().setSharedPreferencesMode(Context.MODE_WORLD_READABLE);
+        getPreferenceManager().setSharedPreferencesMode(Context.MODE_PRIVATE);
         getPreferenceManager().setSharedPreferencesName("settings");
         setPreferencesFromResource(R.xml.preferences, rootKey);
+        makePrefsReadable();
 
         if (isGlobal) {
             SwitchPreference master = new SwitchPreference(requireContext());
@@ -194,6 +198,22 @@ public class AppPrefsFragment extends PreferenceFragmentCompat
     private void updateRestartButton() {
         if (btnRestart == null) return;
         btnRestart.setVisibility(hasChanges() ? View.VISIBLE : View.GONE);
+    }
+
+    // Called in onStop() where Android guarantees all pending apply() writes are flushed.
+    // Os.chmod makes the file world-readable so XSharedPreferences can read it cross-process.
+    private void makePrefsReadable() {
+        try {
+            File prefsFile = new File(requireContext().getApplicationInfo().dataDir
+                    + "/shared_prefs/settings.xml");
+            if (prefsFile.exists()) Os.chmod(prefsFile.getAbsolutePath(), 0644);
+        } catch (Exception ignored) {}
+    }
+
+    @Override
+    public void onStop() {
+        makePrefsReadable();
+        super.onStop();
     }
 
     private void forceStopApp(String pkg) {

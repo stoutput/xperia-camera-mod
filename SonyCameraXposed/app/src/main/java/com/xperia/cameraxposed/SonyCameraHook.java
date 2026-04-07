@@ -53,7 +53,6 @@ public class SonyCameraHook implements IXposedHookLoadPackage {
     private void reloadPrefs() {
         if (prefs == null) {
             prefs = new XSharedPreferences(MODULE_PKG, "settings");
-            prefs.makeWorldReadable();
         }
         prefs.reload();
     }

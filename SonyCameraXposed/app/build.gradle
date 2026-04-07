@@ -17,9 +17,18 @@ android {
         versionName versionProps['version']
     }
 
+    signingConfigs {
+        debug {
+            enableV1Signing = true
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
 
