@@ -1,4 +1,4 @@
-# Sony Camera Unlocker
+# Xperia Camera Mod (Sony Camera Unlocker) - LSPosed Module
 
 Unlocks the full potential of Sony Xperia's camera sensors (especially the Exmor T) by enabling Sony Xperia's EXCAL image processing pipeline via the Camera2 API.
 
