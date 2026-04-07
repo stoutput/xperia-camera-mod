@@ -131,9 +131,14 @@ public class AppPrefsFragment extends PreferenceFragmentCompat
         btnRestart.setElevation(16);
         btnRestart.setVisibility(View.GONE);
         btnRestart.setOnClickListener(v -> {
-            forceStopApp(appPkg);
-            takeSnapshot(); // Reset baseline so button hides until next change
-            btnRestart.setVisibility(View.GONE);
+            btnRestart.setEnabled(false);
+            forceStopApp(appPkg, success -> {
+                if (success) {
+                    takeSnapshot();
+                    btnRestart.setVisibility(View.GONE);
+                }
+                btnRestart.setEnabled(true);
+            });
         });
 
         wrapper.addView(btnRestart);
@@ -216,16 +221,31 @@ public class AppPrefsFragment extends PreferenceFragmentCompat
         super.onStop();
     }
 
-    private void forceStopApp(String pkg) {
-        try {
-            Runtime.getRuntime().exec(new String[]{"su", "-c", "am force-stop " + pkg});
-            Toast.makeText(requireContext(),
-                    appLabel + " stopped. Reopen it to apply settings.",
-                    Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(requireContext(),
-                    "Failed to stop " + appLabel, Toast.LENGTH_LONG).show();
-        }
+    private void forceStopApp(String pkg, java.util.function.Consumer<Boolean> callback) {
+        android.os.Handler main = new android.os.Handler(android.os.Looper.getMainLooper());
+        new Thread(() -> {
+            boolean success = false;
+            try {
+                Process su = Runtime.getRuntime().exec("su");
+                java.io.DataOutputStream stdin = new java.io.DataOutputStream(su.getOutputStream());
+                stdin.writeBytes("am force-stop " + pkg + "\n");
+                stdin.writeBytes("exit\n");
+                stdin.flush();
+                success = su.waitFor() == 0;
+            } catch (Exception ignored) {}
+            boolean result = success;
+            main.post(() -> {
+                if (result) {
+                    Toast.makeText(requireContext(),
+                            appLabel + " stopped. Reopen it to apply settings.",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(),
+                            "Failed to stop " + appLabel, Toast.LENGTH_LONG).show();
+                }
+                callback.accept(result);
+            });
+        }).start();
     }
 
     @Override
