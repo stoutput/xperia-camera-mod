@@ -3,6 +3,7 @@ package com.xperia.cameraxposed;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        grantWriteSettingsIfNeeded();
         scopedApps = loadScopedApps();
 
         ViewPager2 pager = findViewById(R.id.viewPager);
@@ -56,6 +58,24 @@ public class SettingsActivity extends AppCompatActivity {
             if (pos == 0) tab.setText("Global Defaults");
             else tab.setText(scopedApps.get(pos - 1).label);
         }).attach();
+    }
+
+    private void grantWriteSettingsIfNeeded() {
+        if (checkSelfPermission("android.permission.WRITE_SECURE_SETTINGS")
+                == android.content.pm.PackageManager.PERMISSION_GRANTED) return;
+        new Thread(() -> {
+            try {
+                Process su = Runtime.getRuntime().exec("su");
+                java.io.DataOutputStream os =
+                        new java.io.DataOutputStream(su.getOutputStream());
+                os.writeBytes("pm grant " + getPackageName() + " android.permission.WRITE_SECURE_SETTINGS\n");
+                os.writeBytes("exit\n");
+                os.flush();
+                su.waitFor();
+            } catch (Exception e) {
+                Log.w(TAG, "Could not grant WRITE_SECURE_SETTINGS: " + e.getMessage());
+            }
+        }).start();
     }
 
     private List<AppInfo> loadScopedApps() {

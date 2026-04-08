@@ -2,6 +2,7 @@ package com.xperia.cameraxposed;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.provider.Settings;
 import android.os.Bundle;
 import android.system.Os;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class AppPrefsFragment extends PreferenceFragmentCompat
         getPreferenceManager().setSharedPreferencesMode(Context.MODE_PRIVATE);
         getPreferenceManager().setSharedPreferencesName("settings");
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        makePrefsReadable();
+        syncToSystemSettings(getPreferenceManager().getSharedPreferences());
 
         if (isGlobal) {
             SwitchPreference master = new SwitchPreference(requireContext());
@@ -205,20 +206,17 @@ public class AppPrefsFragment extends PreferenceFragmentCompat
         btnRestart.setVisibility(hasChanges() ? View.VISIBLE : View.GONE);
     }
 
-    // Called in onStop() where Android guarantees all pending apply() writes are flushed.
-    // Os.chmod makes the file world-readable so XSharedPreferences can read it cross-process.
-    private void makePrefsReadable() {
+    private void syncToSystemSettings(SharedPreferences prefs) {
+        android.content.ContentResolver cr = requireContext().getContentResolver();
         try {
-            File prefsFile = new File(requireContext().getApplicationInfo().dataDir
-                    + "/shared_prefs/settings.xml");
-            if (prefsFile.exists()) Os.chmod(prefsFile.getAbsolutePath(), 0644);
-        } catch (Exception ignored) {}
-    }
-
-    @Override
-    public void onStop() {
-        makePrefsReadable();
-        super.onStop();
+            org.json.JSONObject json = new org.json.JSONObject();
+            for (java.util.Map.Entry<String, ?> e : prefs.getAll().entrySet()) {
+                json.put(e.getKey(), e.getValue());
+            }
+            Settings.Global.putString(cr, "sony_cam_xposed", json.toString());
+        } catch (Exception e) {
+            android.util.Log.w("SonyCamXposed", "syncToSystemSettings failed: " + e.getMessage());
+        }
     }
 
     private void forceStopApp(String pkg, java.util.function.Consumer<Boolean> callback) {
@@ -267,6 +265,9 @@ public class AppPrefsFragment extends PreferenceFragmentCompat
         if (key == null) return;
         updateListSummary(key);
         if (!isGlobal) updateRestartButton();
+
+        prefs.edit().commit();
+        syncToSystemSettings(prefs);
     }
 
     private void updateAllListSummaries() {
@@ -285,7 +286,7 @@ public class AppPrefsFragment extends PreferenceFragmentCompat
             if (entry != null) {
                 String base = pref.getSummary() != null ?
                         pref.getSummary().toString().replaceAll("\nCurrent:.*$", "") : "";
-                lp.setSummary(base + "\nCurrent: " + entry);
+                lp.setSummary((base + "\nCurrent: " + entry).replace("%", "%%"));
             }
         }
     }

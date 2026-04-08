@@ -36,6 +36,8 @@ Open the **Sony Camera Unlocker** app. You'll see a tab for Global Defaults plus
 
 Force-stop each scoped camera app and reopen it. A "Restart [App] to Apply" button appears in the settings UI whenever you change something — tap it to force-stop the app immediately.
 
+> **KernelSU / SukiSU users:** The "Restart App to Apply" button requires root access. Open SukiSU Manager → SuperUser, find **Sony Camera Unlocker**, and enable root access for it (UID 0, default capabilities). Without this, the button will always fail with "Failed to stop".
+
 ---
 
 ## Features
