@@ -34,7 +34,11 @@ Open the **Sony Camera Unlocker** app. You'll see a tab for Global Defaults plus
 
 **4. Restart target apps**
 
-Force-stop each scoped camera app and reopen it. A "Restart [App] to Apply" button appears in the settings UI whenever you change something — tap it to force-stop the app immediately.
+Force-stop each scoped camera app and reopen it to activate the module for that app. After this initial restart, **most settings changes apply live** within a few seconds — you don't need to restart the app every time you tweak a setting.
+
+A "Restart [App] to Apply" button appears in the settings UI when you change something on a per-app tab. This is a convenience shortcut; it is not required for every change.
+
+> **Session-scoped settings** — Video Stabilization, Multi-Frame NR, High Quality Snapshot, and Video HDR are camera session parameters. They must be set when the camera session is first opened, so changes to these settings **do** require restarting the app to take effect.
 
 > **KernelSU / SukiSU users:** The "Restart App to Apply" button requires root access. Open SukiSU Manager → SuperUser, find **Sony Camera Unlocker**, and enable root access for it (UID 0, default capabilities). Without this, the button will always fail with "Failed to stop".
 
@@ -44,7 +48,7 @@ Force-stop each scoped camera app and reopen it. A "Restart [App] to Apply" butt
 
 | Feature | Values |
 |---|---|
-| Creative Look | Standard, Neutral, Vivid, Vivid2, FL, Instant, SH, Black & White |
+| Creative Look | Standard (ST), Portrait (PT), Neutral (NT), Vivid (VV), Vivid 2 (VV2), Film Look (FL) |
 | Cinema Profile | S-Cinetone, S-Log2, S-Log3, HLG, and 6 more |
 | Eye AF | Off / Human / Animal |
 | Night Mode | On / Off |
@@ -60,9 +64,13 @@ Force-stop each scoped camera app and reopen it. A "Restart [App] to Apply" butt
 
 ## How It Works
 
-Sony's Camera HAL exposes proprietary features through `com.sonymobile.*` vendor tags in the Camera2 API. Analysis of `libsomc_camerahal.so` shows these are passed directly into the EXCAL processing pipeline with no caller identity checks — any app can set them.
+Sony's Camera HAL exposes proprietary features through `com.sonymobile.*` vendor tags in the Camera2 API. These are passed into Sony's EXCAL processing layer, which drives the BIONZ XR pipeline — any app can set them.
+
+Activating the pipeline requires three tags that Sony's own apps always send: `vagueControlMode=1`, `usecase=1`, and `yuvFrameDrawMode=1`. Without all three, the HAL passes frames through unprocessed regardless of what other vendor tags are set. The module injects these unconditionally on every request, along with the user-configured feature tags.
 
 The module hooks `CaptureRequest.Builder.build()` system-wide via LSPosed. Before each capture request is finalized, it injects the configured vendor tags for that app. Tags already set by the app itself are never overwritten, so app-level controls always take precedence. Sony's own camera apps are excluded automatically.
+
+Settings are relayed to the hook via `Settings.Global` and refreshed every few seconds, so changes in the UI take effect in any running camera app without a restart.
 
 ---
 
