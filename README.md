@@ -2,7 +2,7 @@
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y81X7LER)
 
-Unlocks the full potential of Sony Xperia's camera sensors (especially the Exmor T) by enabling Sony Xperia's EXCAL image processing pipeline via the Camera2 API.
+Unlocks the full potential of Sony Xperia's camera sensors (especially the Exmor T) by enabling Sony Xperia's EXCAL → BIONZ XR image processing pipeline via Camera2 API vendor tag injection.
 
 Exposes Sony's proprietary camera features — Creative Looks, Eye AF, Night Mode, Cinema Profiles, MFNR, and more — for use in **any Camera2 app** on the Xperia 1 V (PDX234), and potentially others.
 
