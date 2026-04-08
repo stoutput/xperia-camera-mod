@@ -69,6 +69,18 @@ jobs:
         working-directory: SonyCameraXposed
         run: ./gradlew assembleRelease
 
+      - name: Sign SonyCameraXposed APK
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > /tmp/release.jks
+          $ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)/apksigner sign \
+            --ks /tmp/release.jks \
+            --ks-pass "pass:${{ secrets.KEYSTORE_PASSWORD }}" \
+            --ks-key-alias "${{ secrets.KEY_ALIAS }}" \
+            --key-pass "pass:${{ secrets.KEY_PASSWORD }}" \
+            --out SonyCameraXposed/app/build/outputs/apk/release/app-release-signed.apk \
+            SonyCameraXposed/app/build/outputs/apk/release/app-release-unsigned.apk
+          rm /tmp/release.jks
+
       - name: Upload SonyCameraX APK
         uses: actions/upload-artifact@v4
         with:
@@ -79,7 +91,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SonyCameraXposed
-          path: SonyCameraXposed/app/build/outputs/apk/release/app-release-unsigned.apk
+          path: SonyCameraXposed/app/build/outputs/apk/release/app-release-signed.apk
 
   release:
     needs: [check-release, build]
@@ -98,7 +110,7 @@ jobs:
         run: |
           VERSION="${{ needs.check-release.outputs.version }}"
           cp artifacts/SonyCameraX/app-debug.apk sony-camerax-debug-v${VERSION}.apk
-          cp artifacts/SonyCameraXposed/app-release-unsigned.apk sony-camera-unlocker-v${VERSION}.apk
+          cp artifacts/SonyCameraXposed/app-release-signed.apk sony-camera-unlocker-v${VERSION}.apk
 
       - name: Generate release notes
         run: |
