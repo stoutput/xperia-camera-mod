@@ -79,7 +79,7 @@
         <ListPreference
             android:key="superResolutionZoomMode"
             android:title="Super Resolution Zoom"
-            android:summary="AI upscaling beyond optical range. Mode 2 = more aggressive enhancement."
+            android:summary="AI upscaling beyond optical range. Auto enables adaptive super-resolution."
             android:entries="@array/super_res_entries"
             android:entryValues="@array/super_res_values"
             android:defaultValue="0" />

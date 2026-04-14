@@ -4,7 +4,7 @@
 
 Unlocks the full potential of Sony Xperia's camera sensors (especially the Exmor T) by enabling Sony Xperia's EXCAL → BIONZ XR image processing pipeline via Camera2 API vendor tag injection.
 
-Exposes Sony's proprietary camera features — Creative Looks, Eye AF, Night Mode, Cinema Profiles, MFNR, and more — for use in **any Camera2 app** on the Xperia 1 V (PDX234), and potentially others.
+Exposes Sony's proprietary camera features — Creative Looks, Eye AF, Night Mode, Cinema Profiles, MFNR, and more — for use in **any Camera2 app**. Auto-detects the device and applies the correct vendor tag configuration automatically.
 
 Implemented as an LSPosed module that injects Sony vendor tags transparently into any app's capture requests, with global and per-app configurations via the included settings UI app (Sony Camera Unlocker).
 
@@ -12,7 +12,7 @@ Implemented as an LSPosed module that injects Sony vendor tags transparently int
 
 ## Requirements
 
-- **Device:** Tested on Sony Xperia 1 V (PDX234) — may work on other Xperia models with the same HAL
+- **Device:** Tested on Sony Xperia 1 V (PDX234). Xperia 1 IV (PDX223 / SOG06 / SO-51C) supported with auto-detected configuration. Other Xperia models may work but are untested.
 - **Android:** Rooted. Tested on LineageOS 23.2
 - **Root:** KernelSU or Magisk with LSPosed installed. Tested with SukiSU + LSPosed IT v1.9.2
 
@@ -48,7 +48,7 @@ A "Restart [App] to Apply" button appears in the settings UI when you change som
 
 | Feature | Values |
 |---|---|
-| Creative Look | Standard (ST), Portrait (PT), Neutral (NT), Vivid (VV), Vivid 2 (VV2), Film Look (FL) |
+| Creative Look | ST, PT, NT, VV, VV2, FL, IN, SH, BW, SE, S-Cinetone (11 profiles) |
 | Cinema Profile | S-Cinetone, S-Log2, S-Log3, HLG, and 6 more |
 | Eye AF | Off / Human / Animal |
 | Night Mode | On / Off |
@@ -56,8 +56,8 @@ A "Restart [App] to Apply" button appears in the settings UI when you change som
 | Still HDR | Off / Modes 1–3 |
 | High Quality Snapshot | On / Off |
 | Video HDR | On / Off |
-| Super-Resolution Zoom | Off / Modes 1–2 |
-| Video Stabilization | Multiple modes |
+| Super-Resolution Zoom | Off / Auto |
+| Video Stabilization | Off / Standard / Active |
 | Scene / Condition Detect | On / Off |
 
 ---
@@ -69,6 +69,8 @@ Sony's Camera HAL exposes proprietary features through `com.sonymobile.*` vendor
 Activating the pipeline requires three tags that Sony's own apps always send: `vagueControlMode=1`, `usecase=1`, and `yuvFrameDrawMode=1`. Without all three, the HAL passes frames through unprocessed regardless of what other vendor tags are set. The module injects these unconditionally on every request, along with the user-configured feature tags.
 
 The module hooks `CaptureRequest.Builder.build()` system-wide via LSPosed. Before each capture request is finalized, it injects the configured vendor tags for that app. Tags already set by the app itself are never overwritten, so app-level controls always take precedence. Sony's own camera apps are excluded automatically.
+
+The module auto-detects the device at runtime via `Build.DEVICE` and applies the appropriate HAL configuration. On the Xperia 1 V, vendor tag keys are typed as `TYPE_BYTE` (`Byte.class`); on the Xperia 1 IV they are `TYPE_INT32` (`Integer.TYPE`). Using the wrong type causes the HAL to silently discard the tag.
 
 Settings are relayed to the hook via `Settings.Global` and refreshed every few seconds, so changes in the UI take effect in any running camera app without a restart.
 
