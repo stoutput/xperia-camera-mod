@@ -1,4 +1,5 @@
 # Xperia Camera Mod (Sony Camera Unlocker) - LSPosed Module
+<img src="https://img.shields.io/badge/stability-stable-green.svg?style=flat-square"> <img src="https://img.shields.io/github/v/release/stoutput/xperia-camera-mod.svg?style=flat-square"> <img src="https://img.shields.io/github/languages/code-size/stoutput/xperia-camera-mod.svg?color=%23307ABE&style=flat-square"> <img src="https://img.shields.io/github/downloads/stoutput/xperia-camera-mod/total.svg?style=flat-square">
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y81X7LER)
 
